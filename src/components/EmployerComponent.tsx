@@ -1,7 +1,7 @@
 import { inject, observer } from "mobx-react";
 import React from "react";
 import { Root } from "../mst";
-import EmployeeComponent from "./EmployeeComponent";
+import { EmployeeComponent } from "./EmployeeComponent";
 
 interface Props {
     rootTree?: Root;
@@ -13,7 +13,7 @@ interface State {
 
 @inject("rootTree")
 @observer
-export default class EmployerComponent extends React.Component<Props, State> {
+class EmployerComponent extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -42,10 +42,12 @@ export default class EmployerComponent extends React.Component<Props, State> {
         const { rootTree } = this.props;
         const { employeeName, hours_worked } = this.state;
         if (!rootTree) return null;
+        const num_employees = rootTree.employer.num_employees
         return (
             <div>
                 <h1>{rootTree.employer.name}</h1>
                 <h2>{rootTree.employer.location}</h2>
+                <p>{`Total of Number Employees ${num_employees}`}</p>
                 <hr />
                 <p>New Employees</p>
                 <form onSubmit={this.onSubmit}>
@@ -70,3 +72,5 @@ export default class EmployerComponent extends React.Component<Props, State> {
         );
     }
 }
+
+export { EmployerComponent };

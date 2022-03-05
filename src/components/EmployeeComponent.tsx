@@ -10,7 +10,7 @@ type State = {}
 
 @observer
 
-export default class EmployeeComponent extends Component<Props, State> {
+class EmployeeComponent extends Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {};
@@ -25,3 +25,5 @@ export default class EmployeeComponent extends Component<Props, State> {
         )
     }
 }
+
+export { EmployeeComponent };

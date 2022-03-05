@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { Provider } from "mobx-react";
 import { setupRootStore } from "./mst/setup";
-import EmployerComponent from "./components/EmployerComponent";
+import { EmployerComponent } from "./components/EmployerComponent";
 
 interface Props { }
 interface State {
@@ -23,8 +23,7 @@ class App extends React.Component<Props, State> {
 
   render() {
     const { rootTree } = this.state
-
-    if (!this.state.rootTree) return null;
+    if (!rootTree) return null;
     return (
       <Provider rootTree={rootTree}>
         <EmployerComponent />
