@@ -9,6 +9,7 @@ interface Props {
 interface State {
     employeeName: string;
     hours_worked: string;
+    searchString: string;
 }
 
 @inject("rootTree")
@@ -19,6 +20,7 @@ class EmployerComponent extends React.Component<Props, State> {
         this.state = {
             employeeName: "",
             hours_worked: "",
+            searchString: "",
         };
     }
     changeEmployeeName = (e: any) => {
@@ -29,6 +31,10 @@ class EmployerComponent extends React.Component<Props, State> {
         const hours_worked = e.target.value;
         this.setState({ hours_worked });
     };
+    searchStringChange = (e: any) => {
+        const searchString = e.target.value;
+        this.setState({ searchString });
+    };
     onSubmit = (e: any) => {
         e.preventDefault();
 
@@ -36,13 +42,16 @@ class EmployerComponent extends React.Component<Props, State> {
         const { rootTree } = this.props;
         if (!rootTree) return null;
         rootTree.employer.newEmployee(employeeName, parseInt(hours_worked));
+        this.setState({ employeeName: "", hours_worked: "", })
     };
 
     render() {
         const { rootTree } = this.props;
-        const { employeeName, hours_worked } = this.state;
+        const { employeeName, hours_worked, searchString } = this.state;
         if (!rootTree) return null;
-        const num_employees = rootTree.employer.num_employees
+        const num_employees = rootTree.employer.num_employees;
+        const filteredEmployees =
+            rootTree.employer.filtered_employees(searchString);
         return (
             <div>
                 <h1>{rootTree.employer.name}</h1>
@@ -52,20 +61,19 @@ class EmployerComponent extends React.Component<Props, State> {
                 <p>New Employees</p>
                 <form onSubmit={this.onSubmit}>
                     <p>Name: </p>
-                    <input
-                        value={employeeName}
-                        onChange={this.changeEmployeeName}
-                    />
+                    <input value={employeeName} onChange={this.changeEmployeeName} />
                     <p>Hours Worked: </p>
-                    <input
-                        value={hours_worked}
-                        onChange={this.changeHoursWorked}
-                    />
+                    <input value={hours_worked} onChange={this.changeHoursWorked} />
                     <br />
                     <button>Submit</button>
                 </form>
                 <hr />
-                {rootTree.employer.employees.map(employee => (
+                <input
+                    placeholder="Search Employees Name"
+                    value={searchString}
+                    onChange={this.searchStringChange}
+                />
+                {filteredEmployees.map((employee) => (
                     <EmployeeComponent employee={employee} key={employee.id} />
                 ))}
             </div>
