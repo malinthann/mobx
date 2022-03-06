@@ -10,6 +10,7 @@
     "@types/node": "^16.11.26",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.13",
+    "axios": "^0.26.0",
     "mobx": "^6.4.2",
     "mobx-react": "^7.3.0",
     "mobx-state-tree": "^5.1.3",
